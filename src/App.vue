@@ -4,7 +4,6 @@
   import Input from './components/_ui/Input.vue'
   import Card from './components/Card.vue'
   import NotFound from './components/NotFound.vue'
-  import Pagination from './components/Pagination.vue'
   import Slider from '@vueform/slider'
 
   import hotelsData from '../hotels.json'
@@ -101,7 +100,7 @@
               Button(@click='clearFilter' title='Очистить фильтр')
         .container
           .container__body(v-for='index in 1')
-            Card(v-for='card in filteredItems' :title='card.name' :rating='card.stars' :type='card.type' :reviews='card.reviews_amount' :country='card.country' :price='card.min_price' :descr='card.description' :isBooked='card.isBooked')
+            Card(v-for='card in paginatedItems' :title='card.name' :rating='card.stars' :type='card.type' :reviews='card.reviews_amount' :country='card.country' :price='card.min_price' :descr='card.description' :isBooked='card.isBooked')
             NotFound(v-if='filteredItems.length === 0' :clear-filter='clearFilter')
           .container__foot
             vue-awesome-paginate(v-if='filteredItems.length > 0' :total-items='filteredItems.length' :items-per-page='3' prev-button-content='< Назад' next-button-content='Следующая >' v-model='currentPage' @click='onClickHandler')

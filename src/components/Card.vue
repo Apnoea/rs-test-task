@@ -33,7 +33,7 @@
           .card__reviews(v-else) {{ reviews }} отзывов
           .card__geo {{ country }}
       div
-      .card__price {{ price.toLocaleString('ru-RU') }} ₽
+      .card__price {{ Math.round(price).toLocaleString('ru-RU') }} ₽
         span Цена за 1 ночь
     .card__row
       .card__descr {{ descr }}
