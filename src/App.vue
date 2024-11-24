@@ -1,6 +1,7 @@
 <script setup>
   import { ref, computed } from 'vue'
   import Button from './components/_ui/Button.vue'
+  import Checkbox from './components/_ui/Checkbox.vue'
   import Input from './components/_ui/Input.vue'
   import Card from './components/Card.vue'
   import NotFound from './components/NotFound.vue'
@@ -8,7 +9,7 @@
 
   import hotelsData from '../hotels.json'
 
-  const countries = ['Австрия', 'Азербайджан', 'Албания', 'Алжир', 'Ангола', 'Андорра']
+  const countries = ['Австрия', 'Азербайджан', 'Албания', 'Алжир', 'Ангола', 'Андорра', 'Греция']
   const selectedCountry = ref([])
   const selectedTypes = ref([])
   const selectedRating = ref([])
@@ -70,20 +71,15 @@
               .filter__item
                 .filter__title Тип
                 .filter__content.filter__content--bg
-                  .ui-checkbox
-                    input(id='checkbox1' type='checkbox' value='Апартаменты' v-model='selectedTypes')
-                    label(for='checkbox1') Апартаменты
-                  .ui-checkbox
-                    input(id='checkbox2' type='checkbox' value='Отель' v-model='selectedTypes')
-                    label(for='checkbox2') Отель
+                  Checkbox(v-model='selectedTypes' id='apartments' value='Апартаменты')
+                  Checkbox(v-model='selectedTypes' id='hotel' value='Отель')
               .filter__item
                 .filter__title Количество звезд
                 .filter__content
-                  .ui-checkbox(v-for='(star, index) in [1, 2, 3, 4, 5]' :key='star')
-                    input(:id="'rating' + index" type='checkbox' :value='star' v-model='selectedRating')
-                    label(v-if='star === 1' :for="'rating' + index") {{ star }} звезда
-                    label(v-else-if='star === 5' :for="'rating' + index") {{ star }} звезд
-                    label(v-else='' :for="'rating' + index") {{ star }} здезды
+                  Checkbox(v-for='(star, index) in [1, 2, 3, 4, 5]' :key='star' v-model='selectedRating' :id="'rating' + index" :value='star')
+                    span(v-if='star === 1' :for="'rating' + index")  звезда
+                    span(v-else-if='star === 5' :for="'rating' + index")  звезд
+                    span(v-else='' :for="'rating' + index")  звезды
               .filter__item
                 .filter__title Количество отзывов (от)
                 Input(v-model='selectedReviews' id='reviewsInput' placeholder='Например, от 10' type='number' step='1')
@@ -159,54 +155,6 @@
       display: grid;
       gap: 15px;
       margin-top: 40px;
-    }
-  }
-  .ui-checkbox {
-    position: relative;
-    input {
-      display: none;
-      &:checked + label {
-        &::before {
-          background-color: #00bb6d;
-          border-color: #00bb6d;
-        }
-        &::after {
-          opacity: 1;
-        }
-      }
-    }
-    label {
-      position: relative;
-      padding-left: 30px;
-      cursor: pointer;
-      user-select: none;
-      &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-        width: 20px;
-        height: 20px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        transition: 0.3s;
-      }
-      &::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 5px;
-        transform: translateY(-50%);
-        width: 10px;
-        height: 10px;
-        background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.5 3.5L4.5 7L9 1' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        opacity: 0;
-        transition: 0.3s;
-      }
     }
   }
   .container {
